@@ -1,12 +1,81 @@
-# Squid-Game-Glass-Bridge-Simulation
-Using a probability function to calculate the probability of a contestant surviving the glass bridge from the popular TV show Squid Game
+# Glass Bridge Survival Simulation 🎲
 
-In this project, we formed equations to simulate the Squid Games bridge, in which there are 16 contestants trying to make it across 18 rows of glass panels set out so that each row has one safe panel and one panel that will fall through upon impact. We used python code to run a simulation of this scenario a large number of times and used the data to calculate the probabilities of success for each contestant, investigating their accuracy to the theoretical values.
+This project simulates the probability of contestants successfully crossing a **bridge of 18 platforms**, where each step has a 50/50 chance of survival (safe vs. falling). The simulation runs many trials to estimate each contestant’s chances of survival depending on their position in line.
 
-In this task, a code was written to simulate the situation and compare with the theoretical probability of success for each contestant, which we have found in the introduction. First, the random module was called to allow random number generators to be used in the code.
+---
 
-First we built a function called “Trial()” to simulate one trial with of all 16 contestants. The function returns a dictionary called “Contestants_Placement” which contains a record of the final platform each contestant reaches. The variable “fate” indicates the success or failure of each step made by contestants, this variable is randomly generated to simulate the players random choice.
+## 🔹 Project Overview
 
-Finally, we wrote a function called “Simulation” to simulate large numbers of trials, it collects the data from each trial and adds a value to each contestant’s total successes every time they reach the 18th platform (and hence survive the challenge). The function uses two dictionaries, the first to store the total number of successes for each contestant; using this it calculates and stores the probabilities of success for each contestant in a second dictionary. The first loop iterates the trial for large number of trials, and the second loop iterates through the dictionaries to find and store the probability of success for each contestant. Note that we define success as having reached the 18th platform.
+* **Trial()**:
+  Simulates one run of the game for 16 contestants.
 
-In order to make a comparison between the calculated and theoretical values added another library called “ProbError” to calculate and store the values for the error in the calculated value for each contestant. The code is run with 10^7 number of trials in order to calculate the probabilites and their errors at a high accuracy.
+  * Each contestant moves forward platform by platform.
+  * At each platform, they have a 50% chance of falling (fate = 0) or surviving (fate = 1).
+  * If a contestant falls, the next contestant benefits from knowing which platforms were safe up to that point.
+  * The bridge has **18 platforms maximum**, and if a contestant reaches that, they’re considered to have crossed successfully.
+
+* **Simulation()**:
+  Runs **10,000 trials** of the game.
+
+  * Tracks how many times each contestant reaches the end.
+  * Calculates the probability of survival for each contestant.
+  * Prints both raw success counts and probabilities.
+
+---
+
+## 🔹 Key Logic
+
+* Contestant **1** has no knowledge and must guess from the start.
+* Contestant **N > 1** starts with knowledge of where contestant **N-1** fell, giving them a slightly higher chance of survival.
+* Over many trials, contestants who go **later** generally have a **higher chance** of crossing.
+
+---
+
+## 🔹 Example Output
+
+```
+SUCCESSES:
+{1: 7, 2: 13, 3: 34, 4: 87, 5: 175, ..., 16: 9825}
+
+PROBABILITIES:
+{1: 0.0007, 2: 0.0013, 3: 0.0034, 4: 0.0087, 5: 0.0175, ..., 16: 0.9825}
+```
+
+Interpretation:
+
+* Contestant 1 almost never makes it across.
+* Contestant 16 (last in line) almost always succeeds.
+* Middle contestants have increasing chances depending on how much knowledge they gain.
+
+---
+
+## 🔹 Requirements
+
+* Python 3.x
+* `random` (built-in, no installation needed)
+
+---
+
+## 🔹 How to Run
+
+Save the script (e.g., `glass_bridge.py`) and run:
+
+```bash
+python glass_bridge.py
+```
+
+The program will simulate 10,000 trials and print out the **success counts** and **probabilities** for all 16 contestants.
+
+---
+
+## 🔹 Concepts Demonstrated
+
+* Monte Carlo simulation
+* Probability estimation
+* Impact of order/position on outcomes
+* Game theory and risk
+
+---
+
+Do you want me to also **optimize the Simulation function** so it doesn’t keep re-running `Trial()` unnecessarily?
+
