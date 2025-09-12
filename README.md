@@ -1,4 +1,4 @@
-# Glass Bridge Survival Simulation 🎲
+# Squid Game's Glass Bridge Survival Simulation 🎲
 
 This project simulates the probability of contestants successfully crossing a **bridge of 18 platforms**, where each step has a 50/50 chance of survival (safe vs. falling). The simulation runs many trials to estimate each contestant’s chances of survival depending on their position in line.
 
